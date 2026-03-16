@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo al Número O2...</title>
+    <!-- Cargamos la base de datos y funciones existentes -->
+    <script src="revistas.js"></script>
+    <script>
+        window.onload = function() {
+            // 1. Buscamos específicamente la revista con id "o2"
+            const revistaO2 = revistas.find(r => r.id === "o2");
+
+            if (revistaO2) {
+                // 2. Creamos una lista única con todas las páginas de este número
+                // Combinamos cuentos, minis, poemas y ensayos si existen
+                let todasLasPaginas = [];
+                
+                if (revistaO2.cuentos) todasLasPaginas = todasLasPaginas.concat(revistaO2.cuentos);
+                if (revistaO2.minis) todasLasPaginas = todasLasPaginas.concat(revistaO2.minis);
+                if (revistaO2.poemas) todasLasPaginas = todasLasPaginas.concat(revistaO2.poemas);
+                if (revistaO2.ensayos) todasLasPaginas = todasLasPaginas.concat(revistaO2.ensayos);
+
+                if (todasLasPaginas.length > 0) {
+                    // 3. Elegimos una página al azar de la lista combinada
+                    const paginaElegida = elegir(todasLasPaginas);
+                    
+                    // 4. Redirigimos usando tu función existente
+                    redirigir(revistaO2.base, paginaElegida);
+                } else {
+                    document.body.innerHTML = "Este número no tiene páginas registradas.";
+                }
+            } else {
+                document.body.innerHTML = "Error: No se encontró el número Distopía en la base de datos.";
+            }
+        };
+    </script>
+</head>
+<body>
+    <p>Buscando un texto aleatorio del número O2 para ti...</p>
+</body>
+</html>
