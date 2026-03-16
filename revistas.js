@@ -24,7 +24,7 @@ base: "https://online.fliphtml5.com/qlffj/fphz",
 cuentos: [9,10,12,14,16,17,20,22,24,26,28,30,32,34],
 minis: [46,47,48,49,50,51],
 poemas: [57,58,59,60],
-ensayos: [6,47]
+ensayos: [6,7]
 },
 
 {
