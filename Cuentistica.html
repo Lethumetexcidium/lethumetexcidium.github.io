@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Redirigiendo...</title>
     <script>
-        // 1. Lista manual de URLs completas (puedes añadir todas las que quieras)
+        // 1. Lista manual de URLs completas
         const urls = [
             "https://www.cuentistica.com/revista/numero-12/alan-amado-lemus-dia-baile",
             "https://www.cuentistica.com/revista/numero-12/diego-covarrubias-el-sotano",
@@ -18,17 +18,16 @@
             "https://www.cuentistica.com/revista/numero-12/isaac-howard-internet-moribunda-fogata-digital",
             "https://www.cuentistica.com/revista/numero-12/sofia-tepalt-lado-del-resplandor",
             "https://www.cuentistica.com/revista/numero-12/daniela-lomartti-gandahar-utopia-futuro",
-            "https://www.cuentistica.com/revista/numero-12/daniela-lomartti-gandahar-utopia-futuro",
-            "https://www.cuentistica.com/revista/numero-12/jr-spinoza-quien-puede-decir-soy-escritor"
+            "https://www.cuentistica.com/revista/numero-12/daniela-lomartti-gandahar-utopia-futuro", // Es intencional que se repita
+            "https://www.cuentistica.com/revista/numero-12/jr-spinoza-quien-puede-decir-soy-escritor", // <-- AQUÍ FALTABA LA COMA
             "https://www.cuentistica.com/revista/numero-12/raul-solis-escritores-que-quieren-gustar-a-editores-de-mal-gusto"
-      
         ];
 
-        window.onload = function( ) {
+        window.onload = function() {
             if (urls.length > 0) {
                 // 2. Elegir una URL al azar de la lista
                 const urlAleatoria = urls[Math.floor(Math.random() * urls.length)];
-                
+
                 // 3. Redirigir inmediatamente
                 window.location.replace(urlAleatoria);
             } else {
