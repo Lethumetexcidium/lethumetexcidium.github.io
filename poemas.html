@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <!-- Asegúrate de que la ruta a revistas.js sea correcta -->
+    <script src="revistas.js"></script>
+    <script>
+        window.onload = function() {
+            console.log("Iniciando redirección...");
+
+            // Verificamos si la base de datos cargó correctamente
+            if (typeof revistas === 'undefined') {
+                console.error("Error: No se encontró la variable 'revistas'. Revisa que revistas.js no tenga etiquetas <script>.");
+                document.body.innerHTML = "Error al cargar la base de datos.";
+                return;
+            }
+
+            // 1. Filtramos las revistas que tienen la categoría "ensayos"
+            const revistasConPoemas = revistas.filter(r => r.poemas && Array.isArray(r.poemas) && r.poemas.length > 0);
+            console.log("Revistas con poemas encontradas:", revistasConPoemas.length);
+
+            if (revistasConPoemas.length > 0) {
+                // 2. Elegimos una revista al azar
+                const revistaElegida = revistasConPoemas[Math.floor(Math.random() * revistasConPoemas.length)];
+                
+                // 3. Elegimos una página al azar
+                const paginaElegida = revistaElegida.poemas[Math.floor(Math.random() * revistaElegida.poemas.length)];
+                
+                // 4. Construimos la URL final
+                // Nota: Usamos window.location.replace para que el usuario no pueda volver atrás al redireccionador
+                const urlFinal = revistaElegida.base + "/#p=" + paginaElegida;
+                console.log("Redirigiendo a:", urlFinal);
+                
+                window.location.replace(urlFinal);
+            } else {
+                console.warn("No se encontraron poemas disponibles.");
+                document.body.innerHTML = "No hay poemas disponibles en este momento.";
+            }
+        };
+    </script>
+</head>
+<body>
+    <p id="mensaje">Buscando un poema para ti...</p>
+</body>
+</html>
