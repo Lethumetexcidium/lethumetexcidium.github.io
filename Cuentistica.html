@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <script>
+        // 1. Lista manual de URLs completas (puedes añadir todas las que quieras)
+        const urls = [
+            "https://www.cuentistica.com/revista/numero-12/alan-amado-lemus-dia-baile",
+            "https://www.cuentistica.com/revista/numero-12/diego-covarrubias-el-sotano",
+            "https://www.cuentistica.com/revista/numero-12/j-a-cervantes-monton-huesos",
+            "https://www.cuentistica.com/revista/numero-12/yoqsan-berumen-sustitutos",
+            "https://www.cuentistica.com/revista/numero-12/ruben-cordon-brujula-rota",
+            "https://www.cuentistica.com/revista/numero-12/a-c-godoysinn-sobre-obsesion-azulina",
+            "https://www.cuentistica.com/revista/numero-12/miguel-abarga-carpanta",
+            "https://www.cuentistica.com/revista/numero-12/ricardo-cuan-boone-ultima-caida-dorado",
+            "https://www.cuentistica.com/revista/numero-12/norma-minniti-miradas",
+            "https://www.cuentistica.com/revista/numero-12/isaac-howard-internet-moribunda-fogata-digital",
+            "https://www.cuentistica.com/revista/numero-12/sofia-tepalt-lado-del-resplandor",
+            "https://www.cuentistica.com/revista/numero-12/daniela-lomartti-gandahar-utopia-futuro",
+            "https://www.cuentistica.com/revista/numero-12/daniela-lomartti-gandahar-utopia-futuro",
+            "https://www.cuentistica.com/revista/numero-12/jr-spinoza-quien-puede-decir-soy-escritor"
+            "https://www.cuentistica.com/revista/numero-12/raul-solis-escritores-que-quieren-gustar-a-editores-de-mal-gusto"
+      
+        ];
 
+        window.onload = function( ) {
+            if (urls.length > 0) {
+                // 2. Elegir una URL al azar de la lista
+                const urlAleatoria = urls[Math.floor(Math.random() * urls.length)];
+                
+                // 3. Redirigir inmediatamente
+                window.location.replace(urlAleatoria);
+            } else {
+                document.body.innerHTML = "No hay URLs configuradas en este archivo.";
+            }
+        };
+    </script>
+</head>
+<body>
+    <p>Buscando un texto para ti...</p>
+</body>
+</html>
