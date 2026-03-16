@@ -1,4 +1,3 @@
-<script>
 
 const revistas = [
 
@@ -83,4 +82,3 @@ function redirigir(base,pagina){
 window.location.href = base + "/#p=" + pagina
 }
 
-</script>
