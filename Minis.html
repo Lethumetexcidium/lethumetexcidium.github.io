@@ -17,7 +17,7 @@
             }
 
             // 1. Filtramos las revistas que tienen la categoría "ensayos"
-            const revistasConCuentoss = revistas.filter(r => r.cuentos && Array.isArray(r.cuentos) && r.cuentos.length > 0);
+            const revistasConCuentos = revistas.filter(r => r.cuentos && Array.isArray(r.cuentos) && r.cuentos.length > 0);
             console.log("Revistas con cuentos encontradas:", revistasConCuentos.length);
 
             if (revistasConCuentos.length > 0) {
