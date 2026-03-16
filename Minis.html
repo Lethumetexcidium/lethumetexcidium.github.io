@@ -1,87 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Redirección Aleatoria</title>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <!-- Asegúrate de que la ruta a revistas.js sea correcta -->
+    <script src="revistas.js"></script>
+    <script>
+        window.onload = function() {
+            console.log("Iniciando redirección...");
+
+            // Verificamos si la base de datos cargó correctamente
+            if (typeof revistas === 'undefined') {
+                console.error("Error: No se encontró la variable 'revistas'. Revisa que revistas.js no tenga etiquetas <script>.");
+                document.body.innerHTML = "Error al cargar la base de datos.";
+                return;
+            }
+
+            // 1. Filtramos las revistas que tienen la categoría "ensayos"
+            const revistasConCuentoss = revistas.filter(r => r.cuentos && Array.isArray(r.cuentos) && r.cuentos.length > 0);
+            console.log("Revistas con cuentos encontradas:", revistasConCuentos.length);
+
+            if (revistasConCuentos.length > 0) {
+                // 2. Elegimos una revista al azar
+                const revistaElegida = revistasConCuentos[Math.floor(Math.random() * revistasConCuentos.length)];
+                
+                // 3. Elegimos una página al azar
+                const paginaElegida = revistaElegida.cuentos[Math.floor(Math.random() * revistaElegida.cuentos.length)];
+                
+                // 4. Construimos la URL final
+                // Nota: Usamos window.location.replace para que el usuario no pueda volver atrás al redireccionador
+                const urlFinal = revistaElegida.base + "/#p=" + paginaElegida;
+                console.log("Redirigiendo a:", urlFinal);
+                
+                window.location.replace(urlFinal);
+            } else {
+                console.warn("No se encontraron cuentos disponibles.");
+                document.body.innerHTML = "No hay cuentos disponibles en este momento.";
+            }
+        };
+    </script>
 </head>
 <body>
-  <script>
-    // Array de URLs a las que deseas redirigir
-    var urls = [
-      "https://online.fliphtml5.com/qlffj/zuyx/?fbclid=IwAR32abBx5SHNOnc2b3JL-_Y5mAXDGCGZqbMEe9gOjMU1FfhT0OazPbo0PEI#p=29",
-      "https://online.fliphtml5.com/qlffj/zuyx/?fbclid=IwAR32abBx5SHNOnc2b3JL-_Y5mAXDGCGZqbMEe9gOjMU1FfhT0OazPbo0PEI#p=30",
-      "https://online.fliphtml5.com/qlffj/zuyx/?fbclid=IwAR32abBx5SHNOnc2b3JL-_Y5mAXDGCGZqbMEe9gOjMU1FfhT0OazPbo0PEI#p=31",
-      "https://online.fliphtml5.com/qlffj/zuyx/?fbclid=IwAR32abBx5SHNOnc2b3JL-_Y5mAXDGCGZqbMEe9gOjMU1FfhT0OazPbo0PEI#p=32",
-      "https://online.fliphtml5.com/qlffj/zuyx/?fbclid=IwAR32abBx5SHNOnc2b3JL-_Y5mAXDGCGZqbMEe9gOjMU1FfhT0OazPbo0PEI#p=33",
-      "https://online.fliphtml5.com/qlffj/qcaz/?fbclid=IwAR0BviNHywh3JCkFdyg-u6Lw2bf73EtEromQKMVqbDr1h1l7WBZkX7Uc6XI#p=29",
-      "https://online.fliphtml5.com/qlffj/qcaz/?fbclid=IwAR0BviNHywh3JCkFdyg-u6Lw2bf73EtEromQKMVqbDr1h1l7WBZkX7Uc6XI#p=30",
-      "https://online.fliphtml5.com/qlffj/qcaz/?fbclid=IwAR0BviNHywh3JCkFdyg-u6Lw2bf73EtEromQKMVqbDr1h1l7WBZkX7Uc6XI#p=31",
-      "https://online.fliphtml5.com/qlffj/qcaz/?fbclid=IwAR0BviNHywh3JCkFdyg-u6Lw2bf73EtEromQKMVqbDr1h1l7WBZkX7Uc6XI#p=32",
-      "https://online.fliphtml5.com/qlffj/qcaz/?fbclid=IwAR0BviNHywh3JCkFdyg-u6Lw2bf73EtEromQKMVqbDr1h1l7WBZkX7Uc6XI#p=33",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=6",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=7",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=8",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=9",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=10",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=11",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=12",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=13",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=15",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=16",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=17",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=18",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=20",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=21",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=22",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=23",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=24",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=25",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=27",
-      "https://online.fliphtml5.com/qlffj/iwub/?fbclid=IwAR1Z7NO1H1OJF8Xy858T5QaPstgs_5Bo308MKHBfBXrWkxhrsjJi5ABFW8E#p=28",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=39",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=40",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=41",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=42",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=43",
-      "https://online.fliphtml5.com/qlffj/yuuf/?fbclid=IwAR2hh4Xjrtho-x0rsrbvbvCQCcDe3BayaqiUDmXSHMjjLLQqlTzbkXTtzU4#p=44",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=8",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=9",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=10",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=11",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=12",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=13",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=14",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=15",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=16",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=17",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=18",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=19",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=20",
-      "https://online.fliphtml5.com/qlffj/mulc/#p=21",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=46",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=47",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=48",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=49",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=50",
-      "https://online.fliphtml5.com/qlffj/nljw/?fbclid=IwAR22BTpujfEfAcU0HsEMduWLMSYB6NhVi-FzCu91BpOLAwIcvGoo5dBYhGI#p=51",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=44",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=45",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=46",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=47",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=48",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=49",
-      "https://online.fliphtml5.com/qlffj/akxv/?fbclid=IwAR3W2nWQCK-lXa4cMue8ATAmbY4aJx46A8s-5pUuVBsAaOLgNvM2DvZt-fY#p=50",
-      // Agrega más URLs si es necesario
-    ];
-
-    // Función para redirigir aleatoriamente
-    function redirigirAleatoriamente() {
-      var indiceAleatorio = Math.floor(Math.random() * urls.length);
-      var urlRedireccion = urls[indiceAleatorio];
-      window.location.href = urlRedireccion;
-    }
-
-    // Llama a la función cuando se cargue la página
-    redirigirAleatoriamente();
-  </script>
+    <p id="mensaje">Buscando un cuento para ti...</p>
 </body>
 </html>
