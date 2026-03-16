@@ -1,124 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Redirección Aleatoria</title>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <!-- Asegúrate de que la ruta a revistas.js sea correcta -->
+    <script src="revistas.js"></script>
+    <script>
+        window.onload = function() {
+            console.log("Iniciando redirección...");
+
+            // Verificamos si la base de datos cargó correctamente
+            if (typeof revistas === 'undefined') {
+                console.error("Error: No se encontró la variable 'revistas'. Revisa que revistas.js no tenga etiquetas <script>.");
+                document.body.innerHTML = "Error al cargar la base de datos.";
+                return;
+            }
+
+            // 1. Filtramos las revistas que tienen la categoría "ensayos"
+            const revistasConMinis = revistas.filter(r => r.minis && Array.isArray(r.minis) && r.minis.length > 0);
+            console.log("Revistas con minis encontradas:", revistasConMinis.length);
+
+            if (revistasConMinis.length > 0) {
+                // 2. Elegimos una revista al azar
+                const revistaElegida = revistasConMinis[Math.floor(Math.random() * revistasConMinis.length)];
+                
+                // 3. Elegimos una página al azar
+                const paginaElegida = revistaElegida.minis[Math.floor(Math.random() * revistaElegida.minis.length)];
+                
+                // 4. Construimos la URL final
+                // Nota: Usamos window.location.replace para que el usuario no pueda volver atrás al redireccionador
+                const urlFinal = revistaElegida.base + "/#p=" + paginaElegida;
+                console.log("Redirigiendo a:", urlFinal);
+                
+                window.location.replace(urlFinal);
+            } else {
+                console.warn("No se encontraron minis disponibles.");
+                document.body.innerHTML = "No hay minis disponibles en este momento.";
+            }
+        };
+    </script>
 </head>
 <body>
-  <script>
-    // Array de URLs a las que deseas redirigir
-    var urls = [
-"https://online.fliphtml5.com/qlffj/wtcz/#p=7",
-"https://online.fliphtml5.com/qlffj/wtcz/#p=8",
-"https://online.fliphtml5.com/qlffj/wtcz/#p=10",
-"https://online.fliphtml5.com/qlffj/wtcz/#p=12",
-"https://online.fliphtml5.com/qlffj/wtcz/#p=24",
-"https://online.fliphtml5.com/qlffj/wtcz/#p=26",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=8",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=10",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=11",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=12",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=14",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=16",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=20",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=22",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=23",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=24",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=26",
-"https://online.fliphtml5.com/qlffj/ckzf/#p=27",
-"https://online.fliphtml5.com/qlffj/fphz/#p=11",
-"https://online.fliphtml5.com/qlffj/fphz/#p=12",
-"https://online.fliphtml5.com/qlffj/fphz/#p=14",
-"https://online.fliphtml5.com/qlffj/fphz/#p=16",
-"https://online.fliphtml5.com/qlffj/fphz/#p=17",
-"https://online.fliphtml5.com/qlffj/fphz/#p=18",
-"https://online.fliphtml5.com/qlffj/fphz/#p=20",
-"https://online.fliphtml5.com/qlffj/fphz/#p=22",
-"https://online.fliphtml5.com/qlffj/fphz/#p=24",
-"https://online.fliphtml5.com/qlffj/fphz/#p=26",
-"https://online.fliphtml5.com/qlffj/fphz/#p=28",
-"https://online.fliphtml5.com/qlffj/fphz/#p=30",
-"https://online.fliphtml5.com/qlffj/fphz/#p=32",
-"https://online.fliphtml5.com/qlffj/fphz/#p=34",
-"https://online.fliphtml5.com/qlffj/fphz/#p=36",
-"https://online.fliphtml5.com/qlffj/fphz/#p=38",
-"https://online.fliphtml5.com/qlffj/fphz/#p=40",
-"https://online.fliphtml5.com/qlffj/fphz/#p=42",
-"https://online.fliphtml5.com/qlffj/fphz/#p=44",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=9",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=10",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=12",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=14",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=16",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=17",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=20",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=22",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=24",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=26",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=28",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=30",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=32",
-"https://online.fliphtml5.com/qlffj/ldaf/#p=34",
-"https://online.fliphtml5.com/qlffj/sybu/#p=6",
-"https://online.fliphtml5.com/qlffj/sybu/#p=7",
-"https://online.fliphtml5.com/qlffj/sybu/#p=8",
-"https://online.fliphtml5.com/qlffj/sybu/#p=9",
-"https://online.fliphtml5.com/qlffj/sybu/#p=10",
-"https://online.fliphtml5.com/qlffj/sybu/#p=11",
-"https://online.fliphtml5.com/qlffj/sybu/#p=12",
-"https://online.fliphtml5.com/qlffj/sybu/#p=13",
-"https://online.fliphtml5.com/qlffj/sybu/#p=15",
-"https://online.fliphtml5.com/qlffj/sybu/#p=16",
-"https://online.fliphtml5.com/qlffj/sybu/#p=17",
-"https://online.fliphtml5.com/qlffj/sybu/#p=18",
-"https://online.fliphtml5.com/qlffj/sybu/#p=20",
-"https://online.fliphtml5.com/qlffj/sybu/#p=21",
-"https://online.fliphtml5.com/qlffj/sybu/#p=22",
-"https://online.fliphtml5.com/qlffj/sybu/#p=23",
-"https://online.fliphtml5.com/qlffj/sybu/#p=24",
-"https://online.fliphtml5.com/qlffj/sybu/#p=25",
-"https://online.fliphtml5.com/qlffj/sybu/#p=27",
-"https://online.fliphtml5.com/qlffj/sybu/#p=28",
-"https://online.fliphtml5.com/qlffj/ryom/#p=8",
-"https://online.fliphtml5.com/qlffj/ryom/#p=10",
-"https://online.fliphtml5.com/qlffj/ryom/#p=13",
-"https://online.fliphtml5.com/qlffj/ryom/#p=15",
-"https://online.fliphtml5.com/qlffj/ryom/#p=22",
-"https://online.fliphtml5.com/qlffj/ryom/#p=24",
-"https://online.fliphtml5.com/qlffj/ryom/#p=26",
-"https://online.fliphtml5.com/qlffj/ryom/#p=28",
-"https://online.fliphtml5.com/qlffj/ryom/#p=29",
-"https://online.fliphtml5.com/qlffj/ryom/#p=31",
-"https://online.fliphtml5.com/qlffj/ryom/#p=33",
-"https://online.fliphtml5.com/qlffj/ryom/#p=34",
-"https://online.fliphtml5.com/qlffj/ryom/#p=36",
-"https://online.fliphtml5.com/qlffj/akxv/#p=12",
-"https://online.fliphtml5.com/qlffj/akxv/#p=14",
-"https://online.fliphtml5.com/qlffj/akxv/#p=16",
-"https://online.fliphtml5.com/qlffj/akxv/#p=19",
-"https://online.fliphtml5.com/qlffj/akxv/#p=20",
-"https://online.fliphtml5.com/qlffj/akxv/#p=22",
-"https://online.fliphtml5.com/qlffj/akxv/#p=24",
-"https://online.fliphtml5.com/qlffj/akxv/#p=26",
-"https://online.fliphtml5.com/qlffj/akxv/#p=28",
-"https://online.fliphtml5.com/qlffj/akxv/#p=30",
-"https://online.fliphtml5.com/qlffj/akxv/#p=32",
-"https://online.fliphtml5.com/qlffj/akxv/#p=34",
-"https://online.fliphtml5.com/qlffj/akxv/#p=36",
-"https://online.fliphtml5.com/qlffj/akxv/#p=38",
-"https://online.fliphtml5.com/qlffj/akxv/#p=43",
-
-      // Agrega más URLs si es necesario
-    ];
-
-    // Función para redirigir aleatoriamente
-    function redirigirAleatoriamente() {
-      var indiceAleatorio = Math.floor(Math.random() * urls.length);
-      var urlRedireccion = urls[indiceAleatorio];
-      window.location.href = urlRedireccion;
-    }
-
-    // Llama a la función cuando se cargue la página
-    redirigirAleatoriamente();
-  </script>
+    <p id="mensaje">Buscando una minificción para ti...</p>
 </body>
 </html>
