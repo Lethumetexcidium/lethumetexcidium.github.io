@@ -3,31 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Redirigiendo...</title>
-    <!-- Cargamos la base de datos y funciones existentes -->
+    <!-- Asegúrate de que la ruta a revistas.js sea correcta -->
     <script src="revistas.js"></script>
     <script>
         window.onload = function() {
+            console.log("Iniciando redirección...");
+
+            // Verificamos si la base de datos cargó correctamente
+            if (typeof revistas === 'undefined') {
+                console.error("Error: No se encontró la variable 'revistas'. Revisa que revistas.js no tenga etiquetas <script>.");
+                document.body.innerHTML = "Error al cargar la base de datos.";
+                return;
+            }
+
             // 1. Filtramos las revistas que tienen la categoría "ensayos"
-            const revistasConEnsayos = revistas.filter(r => r.ensayos && r.ensayos.length > 0);
+            const revistasConEnsayos = revistas.filter(r => r.ensayos && Array.isArray(r.ensayos) && r.ensayos.length > 0);
+            console.log("Revistas con ensayos encontradas:", revistasConEnsayos.length);
 
             if (revistasConEnsayos.length > 0) {
-                // 2. Elegimos una revista al azar de las que tienen ensayos
-                const revistaElegida = elegir(revistasConEnsayos);
+                // 2. Elegimos una revista al azar
+                const revistaElegida = revistasConEnsayos[Math.floor(Math.random() * revistasConEnsayos.length)];
                 
-                // 3. Elegimos una página al azar de la lista de ensayos de esa revista
-                const paginaElegida = elegir(revistaElegida.ensayos);
+                // 3. Elegimos una página al azar
+                const paginaElegida = revistaElegida.ensayos[Math.floor(Math.random() * revistaElegida.ensayos.length)];
                 
-                // 4. Ejecutamos la redirección usando tu función existente
-                redirigir(revistaElegida.base, paginaElegida);
+                // 4. Construimos la URL final
+                // Nota: Usamos window.location.replace para que el usuario no pueda volver atrás al redireccionador
+                const urlFinal = revistaElegida.base + "/#p=" + paginaElegida;
+                console.log("Redirigiendo a:", urlFinal);
+                
+                window.location.replace(urlFinal);
             } else {
-                console.error("No se encontraron ensayos en la base de datos.");
-                // Opcional: Redirigir a index.html si no hay contenido
-                // window.location.href = "index.html";
+                console.warn("No se encontraron ensayos disponibles.");
+                document.body.innerHTML = "No hay ensayos disponibles en este momento.";
             }
         };
     </script>
 </head>
 <body>
-    <p>Buscando un ensayo para ti...</p>
+    <p id="mensaje">Buscando un ensayo para ti...</p>
 </body>
 </html>
