@@ -37,6 +37,14 @@ ensayos: [6,8]
 },
 
 {
+id: "o5",
+base: "https://online.fliphtml5.com/qlffj/qguf",
+cuentos: [7,12,14,16,18,20,22,24],
+minis: [26,27,28,29,30,31,32,33],
+ensayos: [35,38,41]
+},
+  
+{
 id: "e1",
 base: "https://online.fliphtml5.com/qlffj/sybu",
 minis: [6,7,8,9,10,11,12,13,15,16,17,18,20,21,22,23,24,25,27,28],
